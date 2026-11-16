@@ -18,4 +18,12 @@ public class SlidingPuzzleChildRelay : MonoBehaviour
             parentScript.DoMoveFromValue(spotID);
         }
     }
+
+    public void OnActivation()
+    {
+        if (parentScript != null)
+        {
+            parentScript.DoMoveFromValue(spotID);
+        }
+    }
 }

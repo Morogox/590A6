@@ -15,8 +15,6 @@ public class SlidingPuzzleScript : MonoBehaviour
     public GameObject square7;
     public GameObject square8;
 
-    public GameMaster gameMaster;
-
     private int[][] data = new int[][]
     {
         new int[] {1, 2, 3},
@@ -294,6 +292,6 @@ public class SlidingPuzzleScript : MonoBehaviour
     private void PuzzleIsSolved()
     {
         // PUT ANY AND ALL CODE FOR WHEN THIS PUZZLE IS SOLVED HERE!
-        gameMaster.PuzzleCompleted();
+        GameMaster.Instance.PuzzleOneSolved();
     }
 }
