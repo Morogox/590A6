@@ -34,9 +34,9 @@ public class SlidingPuzzleScript : MonoBehaviour
     public void SetPuzzle() {
         data = new int[][]
         {
-            new int[] {3, 4, 5},
-            new int[] {7, 2, 8},
-            new int[] {1, 6, 0}
+            new int[] {1, 2, 3},
+            new int[] {4, 5, 6},
+            new int[] {7, 0, 8}
         };
     }
 

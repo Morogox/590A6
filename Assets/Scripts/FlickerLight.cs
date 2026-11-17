@@ -1,10 +1,11 @@
+
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Light))]
 public class FlickerLight : MonoBehaviour
 {
-    public Renderer bulbRenderer;          // drag your bulb mesh here
+    public Renderer bulbRenderer;
 
     [Header("Gap between flickers (seconds)")]
     public float minGap = 2f;
@@ -15,43 +16,106 @@ public class FlickerLight : MonoBehaviour
     public float maxDuration = 1.5f;
 
     [Header("Flicker intensity")]
-    public float minBrightness = 0.1f;     // darkest a flicker can get
-    public float stepTime = 0.04f;         // how fast it jitters
+    public float minBrightness = 0.1f;
+    public float stepTime = 0.04f;
 
-    Light lightComp;
-    float baseIntensity;
-    Material bulbMat;
+    private Light lightComp;
+    private float baseIntensity;
+    private Material bulbMat;
+
+    public AudioSource bulbHum;
+    public AudioSource bulbFlicker;
+
+    [Header("Light State")]
+    public bool on = false;
+
+    private Coroutine flickerCoroutine;
 
     void Awake()
     {
         lightComp = GetComponent<Light>();
         baseIntensity = lightComp.intensity;
-        if (bulbRenderer != null) bulbMat = bulbRenderer.material;
+
+        if (bulbRenderer != null)
+            bulbMat = bulbRenderer.material;
+
+        SetBrightness(0f);
+        bulbFlicker.Play();
+        bulbFlicker.Pause();
     }
 
-    void OnEnable() { StartCoroutine(FlickerLoop()); }
+    public void ToggleLight()
+    {
+        if (on)
+            TurnOff();
+        else
+            TurnOn();
+    }
+
+    public void TurnOn()
+    {
+        if (on) return;
+
+        on = true;
+
+        if (flickerCoroutine != null)
+            StopCoroutine(flickerCoroutine);
+
+        flickerCoroutine = StartCoroutine(FlickerLoop());
+        bulbHum.Play();
+        
+    }
+
+    public void TurnOff()
+    {
+        on = false;
+
+        if (flickerCoroutine != null)
+        {
+            StopCoroutine(flickerCoroutine);
+            flickerCoroutine = null;
+        }
+
+        SetBrightness(0f);
+        bulbHum.Stop();
+    }
 
     IEnumerator FlickerLoop()
     {
-        while (true)
+        // Immediately begin with a flicker
+        while (on)
         {
-            SetBrightness(1f);
-            yield return new WaitForSeconds(Random.Range(minGap, maxGap));
-
             float flickerEnd = Time.time + Random.Range(minDuration, maxDuration);
-            float depth = Random.Range(0.3f, 1f);   // subtle vs. deep stutter
+            float depth = Random.Range(0.3f, 1f);
 
-            while (Time.time < flickerEnd)
+            bulbFlicker.UnPause();
+
+            while (on && Time.time < flickerEnd)
             {
-                SetBrightness(Mathf.Lerp(1f, Random.Range(minBrightness, 1f), depth));
+                SetBrightness(
+                    Mathf.Lerp(1f, Random.Range(minBrightness, 1f), depth)
+                );
+
                 yield return new WaitForSeconds(stepTime);
             }
+
+            bulbFlicker.Pause();
+
+            if (!on) break;
+
+            SetBrightness(1f);
+
+            yield return new WaitForSeconds(Random.Range(minGap, maxGap));
         }
+
+        flickerCoroutine = null;
     }
 
     void SetBrightness(float b)
     {
         lightComp.intensity = baseIntensity * b;
-        if (bulbMat != null) bulbMat.SetFloat("_Brightness", b);
+
+        if (bulbMat != null)
+            bulbMat.SetFloat("_Brightness", b);
     }
 }

@@ -7,6 +7,13 @@ public class GameMaster : MonoBehaviour
     private static GameMaster _instance;
     public static GameMaster Instance {get {return _instance;}}
 
+    public FlickerLight lightBulb;
+    public RadioScript radio;
+
+    public Renderer cameraScreen;
+    public GameObject monitorCover;
+
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -56,14 +63,13 @@ public class GameMaster : MonoBehaviour
     public void StartEverything()
     {
         // cover up stuff and make it dark
-        GameObject lightbulb = GameObject.Find("Bulb");
-        lightbulb.GetComponent<MeshRenderer>().enabled = false;
-        GameObject pointlight = GameObject.Find("Point Light");
-        pointlight.GetComponent<Light>().enabled = false;
-        GameObject cameraScreen = GameObject.Find("CameraSystem_Output");
-        cameraScreen.GetComponent<Renderer>().material = cameraScreenInactive;
+        //GameObject lightbulb = GameObject.Find("Bulb");
+        //lightbulb.GetComponent<MeshRenderer>().enabled = false;
+        //GameObject pointlight = GameObject.Find("Point Light");
+        //pointlight.GetComponent<Light>().enabled = false;
+        cameraScreen.material = cameraScreenInactive;
         GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
-        otherMonitorCover.GetComponent<MeshRenderer>().enabled = true;
+        monitorCover.GetComponent<MeshRenderer>().enabled = true;
     }
 
     /// <summary>
@@ -72,19 +78,16 @@ public class GameMaster : MonoBehaviour
     /// </summary>
     public void PuzzleOneSolved()
     {
-        GameObject lightbulb = GameObject.Find("Bulb");
-        lightbulb.GetComponent<MeshRenderer>().enabled = true;
-        GameObject pointlight = GameObject.Find("Point Light");
-        pointlight.GetComponent<Light>().enabled = true;
-        GameObject cameraScreen = GameObject.Find("CameraSystem_Output");
-        cameraScreen.GetComponent<Renderer>().material = cameraScreenActive;
-        GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
-        otherMonitorCover.GetComponent<MeshRenderer>().enabled = false;
+        lightBulb.ToggleLight();
+        cameraScreen.material = cameraScreenActive;
+        monitorCover.GetComponent<MeshRenderer>().enabled = false;
+        radio.StartRadio();
+
     }
 
     public void PuzzleTwoSolved()
     {
-        
+        radio.StopRadio();
     }
 
     public void PuzzleThreeSolved()
