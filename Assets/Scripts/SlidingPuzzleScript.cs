@@ -26,18 +26,31 @@ public class SlidingPuzzleScript : MonoBehaviour
 /// tells if the puzzle has been solved, starts as false and once true, never goes back.
 /// </summary>
     public bool puzzleSolved = false;
+    public bool debugPuzzle = true;
     int emptySpot = -1;
 
 /// <summary>
 /// Call this to reset the puzzle back to default,
 /// </summary>
     public void SetPuzzle() {
-        data = new int[][]
+        if (debugPuzzle)
         {
+            data = new int[][]
+            {
             new int[] {1, 2, 3},
             new int[] {4, 5, 6},
             new int[] {7, 0, 8}
-        };
+            };
+        } 
+        else
+        {
+            data = new int[][]
+            {
+            new int[] {3, 4, 5},
+            new int[] {7, 2, 8},
+            new int[] {1, 6, 0}
+            };
+        }
     }
 
 /// <summary>

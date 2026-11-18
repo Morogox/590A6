@@ -13,6 +13,8 @@ public class GameMaster : MonoBehaviour
     public Renderer cameraScreen;
     public GameObject monitorCover;
 
+    public PasswordCanvas passwordCanvas;
+    public RotatingDoorPuzzle rotatingDoorPuzzle;
 
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class GameMaster : MonoBehaviour
 
     public Material cameraScreenActive;
     public Material cameraScreenInactive;
+    public Material passwordScreenActive;
 
 
     void Start()
@@ -37,39 +40,40 @@ public class GameMaster : MonoBehaviour
         //in case you want to debug stuff, call Puzzle___Solved() in order here.
         StartEverything();
     }
-    public void PuzzleCompleted()
-    {
-        PuzzlesSolved++;
+    // public void PuzzleCompleted()
+    // {
+    //     PuzzlesSolved++;
 
-        Debug.Log("Puzzles solved: " + PuzzlesSolved);
+    //     Debug.Log("Puzzles solved: " + PuzzlesSolved);
 
-        // Check game progression
-        CheckGameProgress();
-    }
+    //     // Check game progression
+    //     CheckGameProgress();
+    // }
 
-    private void CheckGameProgress()
-    {
-        if (PuzzlesSolved == 1)
-        {
-            Debug.Log("First puzzle completed!");
-        }
+    // private void CheckGameProgress()
+    // {
+    //     if (PuzzlesSolved == 1)
+    //     {
+    //         Debug.Log("First puzzle completed!");
+    //     }
 
-        if (PuzzlesSolved == 3)
-        {
-            Debug.Log("Three puzzles completed!");
-        }
-    }
+    //     if (PuzzlesSolved == 3)
+    //     {
+    //         Debug.Log("Three puzzles completed!");
+    //     }
+    // }
 
     public void StartEverything()
     {
         // cover up stuff and make it dark
-        //GameObject lightbulb = GameObject.Find("Bulb");
-        //lightbulb.GetComponent<MeshRenderer>().enabled = false;
-        //GameObject pointlight = GameObject.Find("Point Light");
-        //pointlight.GetComponent<Light>().enabled = false;
+        // GameObject lightbulb_actual = GameObject.Find("Room Bulb");
+        // lightbulb_actual.GetComponent<MeshRenderer>().enabled = false;
+        // GameObject pointlight = GameObject.Find("Point Light Bulb");
+        // pointlight.GetComponent<Light>().enabled = false;
+        lightBulb.TurnOff();
         cameraScreen.material = cameraScreenInactive;
         GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
-        monitorCover.GetComponent<MeshRenderer>().enabled = true;
+        otherMonitorCover.GetComponent<Renderer>().material = cameraScreenInactive;
     }
 
     /// <summary>
@@ -78,20 +82,27 @@ public class GameMaster : MonoBehaviour
     /// </summary>
     public void PuzzleOneSolved()
     {
-        lightBulb.ToggleLight();
+        // GameObject lightbulb_actual = GameObject.Find("Room Bulb");
+        // lightbulb_actual.GetComponent<MeshRenderer>().enabled = true;
+        // GameObject pointlight = GameObject.Find("Point Light Bulb");
+        // pointlight.GetComponent<Light>().enabled = false;
+        lightBulb.TurnOn();
         cameraScreen.material = cameraScreenActive;
-        monitorCover.GetComponent<MeshRenderer>().enabled = false;
+        GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
+        otherMonitorCover.GetComponent<Renderer>().material = passwordScreenActive;
+        // monitorCover.GetComponent<MeshRenderer>().enabled = false;
         radio.StartRadio();
 
     }
 
     public void PuzzleTwoSolved()
     {
+        rotatingDoorPuzzle.Activate();
         radio.StopRadio();
     }
 
     public void PuzzleThreeSolved()
     {
-        
+        print("You win!");
     }
 }
