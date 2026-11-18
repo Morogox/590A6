@@ -18,6 +18,12 @@ public class LanternLight : MonoBehaviour
         lanternLight.intensity = isOn ? targetIntensity : 0f;
     }
 
+    private void Start()
+    {
+        isOn = startOn;
+        lanternLight.intensity = isOn ? targetIntensity : 0f;
+    }
+
     public void ToggleLight()
     {
         isOn = !isOn;

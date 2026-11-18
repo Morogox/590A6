@@ -14,7 +14,9 @@ public class RotatingDoorPuzzle : MonoBehaviour
     public bool PuzzleActive = false;
 
     public GameObject WheelVisuals;
+    public Material InactiveMaterial;
     public Material ActiveMaterial;
+    public Material SolvedMaterial;
     public Light WheelVisualsLight;
 
     public enum Status
@@ -48,6 +50,8 @@ public class RotatingDoorPuzzle : MonoBehaviour
     {
         print("PUZZLESOLVED() called!");
         GameMaster.Instance.PuzzleThreeSolved();
+        WheelVisuals.GetComponent<Renderer>().material = SolvedMaterial;
+        WheelVisualsLight.color = Color.green;
     }
 
     /// <summary>

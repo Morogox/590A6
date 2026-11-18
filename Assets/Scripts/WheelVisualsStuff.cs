@@ -32,6 +32,8 @@ public class WheelMagneticDetent : MonoBehaviour
     private float _currentVisualAngle;
     private int _lastSnappedStep;
 
+    public AudioSource snapSound;
+
     private void Start()
     {
         if (_grabPivot == null && transform.parent != null)
@@ -104,6 +106,8 @@ public class WheelMagneticDetent : MonoBehaviour
         {
             int stepDifference = currentStep - _lastSnappedStep;
             _lastSnappedStep = currentStep;
+
+            snapSound.Play();
 
             bool isClockwise = _invertClockwiseDirection ? (stepDifference < 0) : (stepDifference > 0);
             int stepsMoved = Mathf.Abs(stepDifference);
