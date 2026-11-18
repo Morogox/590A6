@@ -7,7 +7,7 @@ using UnityEngine;
 public class PasswordCanvas : MonoBehaviour
 {
 
-    private int[] REALPASSWORD = {1, 2, 3, 4};
+    private int[] REALPASSWORD = {1, 2, 2, 6};
     public int[] passwordEntry = {-1, -1, -1, -1};
     public int index = 0;
     private bool solved = false;

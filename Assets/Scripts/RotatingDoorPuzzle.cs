@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Oculus.Interaction;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class RotatingDoorPuzzle : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class RotatingDoorPuzzle : MonoBehaviour
 
     public GameObject WheelVisuals;
     public Material ActiveMaterial;
+    public Light WheelVisualsLight;
 
     public enum Status
     {
@@ -31,6 +33,7 @@ public class RotatingDoorPuzzle : MonoBehaviour
     public void Activate()
     {
         WheelVisuals.GetComponent<Renderer>().material = ActiveMaterial;
+        WheelVisualsLight.color = Color.yellow;
         ResetPuzzle();
         PuzzleActive = true;
     }

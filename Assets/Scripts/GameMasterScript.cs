@@ -11,6 +11,7 @@ public class GameMaster : MonoBehaviour
     public RadioScript radio;
 
     public Renderer cameraScreen;
+
     public GameObject monitorCover;
 
     public PasswordCanvas passwordCanvas;
@@ -72,8 +73,8 @@ public class GameMaster : MonoBehaviour
         // pointlight.GetComponent<Light>().enabled = false;
         lightBulb.TurnOff();
         cameraScreen.material = cameraScreenInactive;
-        GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
-        otherMonitorCover.GetComponent<Renderer>().material = cameraScreenInactive;
+        //GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
+        //otherMonitorCover.GetComponent<Renderer>().material = cameraScreenInactive;
     }
 
     /// <summary>
@@ -87,9 +88,9 @@ public class GameMaster : MonoBehaviour
         // GameObject pointlight = GameObject.Find("Point Light Bulb");
         // pointlight.GetComponent<Light>().enabled = false;
         lightBulb.TurnOn();
-        cameraScreen.material = cameraScreenActive;
-        GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
-        otherMonitorCover.GetComponent<Renderer>().material = passwordScreenActive;
+        cameraScreen.material = passwordScreenActive;
+        //GameObject otherMonitorCover = GameObject.Find("CameraSystem_Cover");
+        //otherMonitorCover.GetComponent<Renderer>().material = passwordScreenActive;
         // monitorCover.GetComponent<MeshRenderer>().enabled = false;
         radio.StartRadio();
 
@@ -97,6 +98,7 @@ public class GameMaster : MonoBehaviour
 
     public void PuzzleTwoSolved()
     {
+        cameraScreen.material = cameraScreenActive;
         rotatingDoorPuzzle.Activate();
         radio.StopRadio();
     }
