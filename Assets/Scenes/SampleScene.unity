@@ -28788,7 +28788,7 @@ MonoBehaviour:
   powerOn: {fileID: 8771091788270475263}
   Active: 0
   puzzleSolved: 0
-  debugPuzzle: 1
+  debugPuzzle: 0
 --- !u!4 &1715355959
 Transform:
   m_ObjectHideFlags: 0

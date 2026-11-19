@@ -11,10 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="618c78e3-86cb-4c27-b8d0-4b570dd94e46" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.590A6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.590A6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.utmp/tools/release/arm64-v8a/compile_commands.json" beforeDir="false" afterPath="$PROJECT_DIR$/.utmp/tools/release/arm64-v8a/compile_commands.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene (Deprecated).unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene (Deprecated).unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameMasterScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameMasterScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SlidingPuzzleScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SlidingPuzzleScript.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -62,9 +62,12 @@ public class SlidingPuzzleScript : MonoBehaviour
         {
             data = new int[][]
             {
-            new int[] {3, 4, 5},
-            new int[] {7, 2, 8},
-            new int[] {1, 6, 0}
+            // new int[] {3, 4, 5},
+            // new int[] {7, 2, 8},
+            // new int[] {1, 6, 0}
+            new int[] {1, 3, 6},
+            new int[] {4, 0, 2},
+            new int[] {7, 5, 8}
             };
         }
     }
