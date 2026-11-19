@@ -1,8 +1,45 @@
 
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
+
+    public int TimeLeft = 600; // in seconds
+    public ClockCanvas clockCanvas;
+    private Coroutine timerCoroutine; // acts as our timer that goes every second
+
+    private IEnumerator OneSecondLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            OnOneSecond();
+        }
+    }
+
+    private void OnOneSecond()
+    {
+        if (GameBeaten) {return;}
+        TimeLeft--;
+        clockCanvas.UpdateTimer(TimeLeft);
+        if (TimeLeft <= 0)
+        {
+            StopCoroutine(timerCoroutine);
+            TimeRanOut();
+
+        }
+    }
+    private void StopTimer()
+    {
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+            timerCoroutine = null;
+        }
+    }
+
 
     private static GameMaster _instance;
     public static GameMaster Instance {get {return _instance;}}
@@ -30,6 +67,7 @@ public class GameMaster : MonoBehaviour
     // thank you: https://gamedev.stackexchange.com/questions/116009/in-unity-how-do-i-correctly-implement-the-singleton-pattern
 
     public int PuzzlesSolved;
+    public bool GameBeaten = false;
 
     public Material cameraScreenActive;
     public Material cameraScreenInactive;
@@ -40,6 +78,7 @@ public class GameMaster : MonoBehaviour
     {
         //in case you want to debug stuff, call Puzzle___Solved() in order here.
         StartEverything();
+        timerCoroutine = StartCoroutine(OneSecondLoop());
     }
     // public void PuzzleCompleted()
     // {
@@ -105,6 +144,12 @@ public class GameMaster : MonoBehaviour
 
     public void PuzzleThreeSolved()
     {
-        print("You win!");
+        GameBeaten = true;
+    }
+
+    public void TimeRanOut()
+    {
+        // code goes here...
+        print("TIME WENT OFF OH MY GOD!!!");
     }
 }
