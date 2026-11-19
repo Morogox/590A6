@@ -134,7 +134,7 @@ private void Awake()
     {
         // cover up stuff and make it dark
         //lightBulb.TurnOff();
-        cameraScreen.material = cameraScreenInactive;
+        cameraScreen.material = cameraScreenInactive; 
         slidingPuzzle.Activate();
     }
 
