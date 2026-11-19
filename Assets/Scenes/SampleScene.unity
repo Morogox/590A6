@@ -16285,7 +16285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a13375039fffc5439a06e472c9a4fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameMaster
-  TimeLeft: 30
+  TimeLeft: 600
   clockCanvas: {fileID: 1352875680}
   lightBulb: {fileID: 82189283}
   radio: {fileID: 1122494720}
