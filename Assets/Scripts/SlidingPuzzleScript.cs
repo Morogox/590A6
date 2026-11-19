@@ -16,6 +16,9 @@ public class SlidingPuzzleScript : MonoBehaviour
     public GameObject square8;
 
     public AudioSource powerOn;
+
+    public bool Active = false;
+
     private int[][] data = new int[][]
     {
         new int[] {1, 2, 3},
@@ -30,9 +33,21 @@ public class SlidingPuzzleScript : MonoBehaviour
     public bool debugPuzzle = true;
     int emptySpot = -1;
 
-/// <summary>
-/// Call this to reset the puzzle back to default,
-/// </summary>
+
+    public void Activate()
+    {
+        Active = true;
+    }
+
+    public void Deactivate()
+    {
+        Active = false;
+    }
+
+
+    /// <summary>
+    /// Call this to reset the puzzle back to default,
+    /// </summary>
     public void SetPuzzle() {
         if (debugPuzzle)
         {
@@ -306,7 +321,10 @@ public class SlidingPuzzleScript : MonoBehaviour
     private void PuzzleIsSolved()
     {
         // PUT ANY AND ALL CODE FOR WHEN THIS PUZZLE IS SOLVED HERE!
-        GameMaster.Instance.PuzzleOneSolved();
-        powerOn.Play();
+        if (Active)
+        {
+            GameMaster.Instance.PuzzleOneSolved();
+            powerOn.Play();
+        }
     }
 }

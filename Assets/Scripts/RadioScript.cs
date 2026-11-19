@@ -6,14 +6,21 @@ public class RadioScript : MonoBehaviour
     public AudioSource radioStart;
     public AudioSource radioMessage;
     public float waitTime = 5f;
+    private Coroutine radioCoroutine;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartRadio()
     {
-        StartCoroutine(RadioSequence());
+        radioCoroutine = StartCoroutine(RadioSequence());
     }
 
     public void StopRadio()
     {
+        if (radioCoroutine != null)
+        {
+            StopCoroutine(radioCoroutine);
+            radioCoroutine = null;
+        }
+
         radioStart.Stop();
         radioMessage.Stop();
     }

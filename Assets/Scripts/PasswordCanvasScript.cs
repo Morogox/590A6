@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class PasswordCanvas : MonoBehaviour
 {
-
-    private int[] REALPASSWORD = {1, 2, 2, 6};
-    public int[] passwordEntry = {-1, -1, -1, -1};
+    private int[] REALPASSWORD = { 1, 2, 2, 6 };
+    public int[] passwordEntry = { -1, -1, -1, -1 };
     public int index = 0;
     private bool solved = false;
+
+    public bool Active = false;
 
     public GameObject number1;
     public GameObject number2;
@@ -18,47 +19,46 @@ public class PasswordCanvas : MonoBehaviour
     public GameObject number4;
     public GameObject passwordBackground;
 
-    
     private TMP_Text[] numberTexts = new TMP_Text[4];
-    
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         numberTexts[0] = number1.GetComponent<TMP_Text>();
         numberTexts[1] = number2.GetComponent<TMP_Text>();
         numberTexts[2] = number3.GetComponent<TMP_Text>();
         numberTexts[3] = number4.GetComponent<TMP_Text>();
-        ResetNumbers();
 
+        ResetNumbers();
     }
 
-    // Update is called once per frame
-    void Update() {}
+    void Update() { }
 
-/// <summary>
-/// Dont use this one anymore, aka
-/// </summary>
-/// <param name="number"></param>
-/// <param name="spot"></param>
+    public void Activate()
+    {
+        if (solved) return;
+        Active = true;
+    }
+
+    public void Deactivate()
+    {
+        Active = false;
+        ResetNumbers();
+    }
+
     private void UpdateNumber(int number, int spot)
     {
-        if (number == -1) {numberTexts[spot].SetText("_");}
-        else {
+        if (number == -1)
+            numberTexts[spot].SetText("_");
+        else
             numberTexts[spot].SetText(number.ToString());
-        }
+
         passwordEntry[spot] = number;
     }
 
-
-    /// <summary>
-    /// This one is only called when there are 0-3 numbers in the text field
-    /// </summary>
-    /// <param name="number"></param>
     private void EnterNumber(int number)
     {
-        if (index > 3) {return;}
+        if (index > 3) return;
+
         UpdateNumber(number, index);
         index++;
     }
@@ -70,14 +70,15 @@ public class PasswordCanvas : MonoBehaviour
             numberTexts[i].SetText("_");
             passwordEntry[i] = -1;
         }
-        index = 0;
 
+        index = 0;
     }
 
     private void DeleteLastNumber()
     {
-        if (index <= 0) {return;}
-        UpdateNumber(-1, index-1);
+        if (index <= 0) return;
+
+        UpdateNumber(-1, index - 1);
         index--;
     }
 
@@ -86,42 +87,46 @@ public class PasswordCanvas : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             if (passwordEntry[i] == -1)
-            {
                 numberTexts[i].SetText("_");
-            } 
-            else {
+            else
                 numberTexts[i].SetText(passwordEntry[i].ToString());
-            }
         }
     }
 
     private bool TryPassword()
     {
-        if (index != 4) {return false;}
+        if (index != 4) return false;
+
         for (int i = 0; i < 4; i++)
         {
-            if (REALPASSWORD[i] != passwordEntry[i]) {return false;}
+            if (REALPASSWORD[i] != passwordEntry[i])
+                return false;
         }
+
         return true;
     }
 
     private void PuzzleSolved()
     {
         ResetNumbers();
+
         numberTexts[0].SetText("t");
         numberTexts[1].SetText("r");
         numberTexts[2].SetText("u");
         numberTexts[3].SetText("e");
+
         GameMaster.Instance.PuzzleTwoSolved();
     }
 
     public void EnterANumber(int keyID)
     {
-        if (solved) {return;}
-        //0-9 are the same, 10 - enter key, 11 - delete key
-        print(keyID);
+        if (!Active || solved) return;
 
-        if (0 <= keyID && keyID < 10) // number entry
+        // 0-9: number entry
+        // 10: enter key
+        // 11: delete key
+
+        if (0 <= keyID && keyID < 10)
         {
             EnterNumber(keyID);
         }
@@ -131,8 +136,11 @@ public class PasswordCanvas : MonoBehaviour
             if (TryPassword())
             {
                 solved = true;
+                Active = false;
                 PuzzleSolved();
-            } else {
+            }
+            else
+            {
                 ResetNumbers();
             }
         }
@@ -141,6 +149,5 @@ public class PasswordCanvas : MonoBehaviour
         {
             DeleteLastNumber();
         }
-
     }
 }

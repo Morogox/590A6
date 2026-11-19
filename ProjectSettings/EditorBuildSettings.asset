@@ -7,10 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/Scenes/SampleScene(Recovered).unity
-    guid: 109ec82c1efecb141aeeab6f2509651d
+    guid: 82a86f6d8f3d9d54f81625a845fa885e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a6f98fd50685e234d8c1c07a97fbb8fc, type: 2}

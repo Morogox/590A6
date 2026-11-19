@@ -25,6 +25,7 @@ public class FlickerLight : MonoBehaviour
 
     public AudioSource bulbHum;
     public AudioSource bulbFlicker;
+    public AudioSource bulbExplode;
 
     [Header("Light State")]
     public bool on = false;
@@ -47,7 +48,7 @@ public class FlickerLight : MonoBehaviour
     public void ToggleLight()
     {
         if (on)
-            TurnOff();
+            TurnOff(false);
         else
             TurnOn();
     }
@@ -66,8 +67,12 @@ public class FlickerLight : MonoBehaviour
         
     }
 
-    public void TurnOff()
+    public void TurnOff(bool Explode)
     {
+        if (Explode)
+        {
+            bulbExplode.Play();
+        }
         on = false;
 
         if (flickerCoroutine != null)
@@ -78,6 +83,8 @@ public class FlickerLight : MonoBehaviour
 
         SetBrightness(0f);
         bulbHum.Stop();
+        bulbFlicker.Stop();
+        
     }
 
     IEnumerator FlickerLoop()

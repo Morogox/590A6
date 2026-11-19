@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Oculus.Interaction;
 using UnityEngine.Experimental.GlobalIllumination;
+using System.Collections;
 
 public class RotatingDoorPuzzle : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class RotatingDoorPuzzle : MonoBehaviour
     public Material SolvedMaterial;
     public Light WheelVisualsLight;
 
+    public AudioSource doorUnlock;
+    public AudioSource ladder;
     public enum Status
     {
         Turn1,
@@ -40,6 +43,15 @@ public class RotatingDoorPuzzle : MonoBehaviour
         PuzzleActive = true;
     }
 
+    public void Deactivate()
+    {
+        WheelVisuals.GetComponent<Renderer>().material = InactiveMaterial;
+        WheelVisualsLight.color = Color.red;
+        ResetPuzzle();
+        PuzzleActive = false;
+
+    }
+
     private void ResetPuzzle()
     {
         amountTurnsLeft = -turn1;
@@ -52,6 +64,16 @@ public class RotatingDoorPuzzle : MonoBehaviour
         GameMaster.Instance.PuzzleThreeSolved();
         WheelVisuals.GetComponent<Renderer>().material = SolvedMaterial;
         WheelVisualsLight.color = Color.green;
+        StartCoroutine(PlayUnlockSounds());
+    }
+
+    private IEnumerator PlayUnlockSounds()
+    {
+        doorUnlock.Play();
+
+        yield return new WaitForSecondsRealtime(doorUnlock.clip.length);
+
+        ladder.Play();
     }
 
     /// <summary>
